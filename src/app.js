@@ -1,5 +1,7 @@
 import express from "express";
 import cors from "cors";
+import menuRoutes from "./routes/menuRoutes.js";
+
 
 const app = express();
 
@@ -11,5 +13,7 @@ app.get("/", (req, res) => {
         message: "Restro API is running"
     });
 });
+
+app.use("/api/menu", menuRoutes);
 
 export default app;
