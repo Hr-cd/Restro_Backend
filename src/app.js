@@ -8,6 +8,7 @@ import adminRoutes from "./routes/adminRoutes.js";
 import adminOrderRoutes from "./routes/adminOrderRoutes.js";
 import categoryRoutes from "./routes/categoryRoutes.js";
 import adminFoodRoutes from "./routes/adminFoodRoutes.js";
+import adminTableRoutes from "./routes/adminTableRoutes.js";
 
 const app = express();
 
@@ -28,5 +29,6 @@ app.use("/api/admin", adminRoutes);
 app.use("/api/admin/orders", adminOrderRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/admin/food-items", adminFoodRoutes);
+app.use("/api/admin/tables", adminTableRoutes);
 
 export default app;
