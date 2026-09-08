@@ -13,7 +13,7 @@ const router = express.Router();
 router.get("/", protect, getAdminOrders);
 router.get("/:id", protect, getAdminOrderById);
 router.put(
-    "/orders/:id/status",
+    "/:id/status",
     protect,
     updateOrderStatus
 );

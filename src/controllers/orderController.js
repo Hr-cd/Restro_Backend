@@ -1,5 +1,4 @@
 import crypto from "crypto";
-
 import Order from "../models/Order.js";
 import FoodItem from "../models/FoodItem.js";
 import Table from "../models/Table.js";
@@ -213,7 +212,10 @@ export const createOrder = async (req, res) => {
         });
 
         const populatedOrder = await Order.findById(order._id)
-            .populate("tableId", "tableNumber");
+        .populate("tableId", "tableNumber");
+
+        const io = req.app.get("io");
+        io.emit("new-order", populatedOrder);
 
         res.status(201).json({
             success: true,

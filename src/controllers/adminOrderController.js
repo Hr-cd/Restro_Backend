@@ -1,5 +1,6 @@
 import Order from "../models/Order.js";
 
+
 export const getAdminOrders = async (req, res) => {
     try {
         const orders = await Order.find()
@@ -83,6 +84,14 @@ export const updateOrderStatus = async (req, res) => {
         order.status = status;
 
         await order.save();
+
+        const io = req.app.get("io");
+
+        io.emit("order-status-updated", {
+            orderId: order._id,
+            orderNumber: order.orderNumber,
+            status: order.status
+        });
 
         res.status(200).json({
             success: true,
