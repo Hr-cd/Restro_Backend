@@ -1,12 +1,13 @@
 import dotenv from "dotenv";
-dotenv.config();
-
 import mongoose from "mongoose";
-
+import crypto from "crypto";
+import Table from "./models/Table.js";
 import connectDB from "./config/db.js";
 
 import Category from "./models/Category.js";
 import FoodItem from "./models/FoodItem.js";
+
+dotenv.config();
 
 const seedData = async () => {
     try {
@@ -16,7 +17,8 @@ const seedData = async () => {
 
         await FoodItem.deleteMany({});
         await Category.deleteMany({});
-
+        await Table.deleteMany({});
+        
         const categories = await Category.insertMany([
             {
                 name: "Pizza",
@@ -49,13 +51,35 @@ const seedData = async () => {
                 sortOrder: 6
             }
         ]);
-
         const categoryMap = {};
-
         categories.forEach((category) => {
             categoryMap[category.name] = category._id;
         });
 
+        const tables = await Table.insertMany([
+            {
+                tableNumber: "1",
+                qrToken: crypto.randomBytes(16).toString("hex")
+            },
+            {
+                tableNumber: "2",
+                qrToken: crypto.randomBytes(16).toString("hex")
+            },
+            {
+                tableNumber: "3",
+                qrToken: crypto.randomBytes(16).toString("hex")
+            },
+            {
+                tableNumber: "4",
+                qrToken: crypto.randomBytes(16).toString("hex")
+            },
+            {
+                tableNumber: "5",
+                qrToken: crypto.randomBytes(16).toString("hex")
+            }
+        ]);
+        console.log("Table 1 token:", tables[0].qrToken);
+        
         await FoodItem.insertMany([
             // -------------------------
             // PIZZA
