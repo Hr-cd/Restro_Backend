@@ -232,3 +232,25 @@ export const createOrder = async (req, res) => {
         });
     }
 };
+
+export const getOrdersByTable = async (req, res) => {
+    try {
+        const { tableId } = req.params;
+
+        const orders = await Order.find({ tableId })
+            .populate("tableId", "tableNumber")
+            .sort({ createdAt: -1 });
+
+        res.status(200).json({
+            success: true,
+            data: orders
+        });
+    } catch (error) {
+        console.error("Get table orders error:", error);
+
+        res.status(500).json({
+            success: false,
+            message: "Failed to fetch table orders"
+        });
+    }
+};
