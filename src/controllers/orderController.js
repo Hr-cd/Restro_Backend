@@ -239,7 +239,7 @@ export const createOrder = async (req, res) => {
         .populate("tableId", "tableNumber");
 
         const io = req.app.get("io");
-        io.emit("new-order", populatedOrder);
+        io.to("admins").emit("new-order", populatedOrder);
 
         res.status(201).json({
             success: true,

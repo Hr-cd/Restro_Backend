@@ -87,7 +87,7 @@ export const updateOrderStatus = async (req, res) => {
 
         const io = req.app.get("io");
 
-        io.emit("order-status-updated", {
+        io.to(`order:${order._id}`).emit("order-status-updated", {
             orderId: order._id,
             orderNumber: order.orderNumber,
             status: order.status

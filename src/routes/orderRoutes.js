@@ -8,8 +8,6 @@ import {
 
 const router = express.Router();
 
-router.post("/", createOrder);
-
 router.get("/:id", getOrderById);
 
 router.post("/", orderLimiter, createOrder);
