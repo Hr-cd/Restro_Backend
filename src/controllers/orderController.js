@@ -2,6 +2,7 @@ import crypto from "crypto";
 import Order from "../models/Order.js";
 import FoodItem from "../models/FoodItem.js";
 import Table from "../models/Table.js";
+import Setting from "../models/Setting.js";
 
 const generateOrderNumber = () => {
     const random = crypto.randomBytes(4).toString("hex").toUpperCase();
@@ -170,11 +171,22 @@ export const createOrder = async (req, res) => {
         // Charges
         // -----------------------------
 
-        const tax = 0;
+        const settings = await Setting.findOne();
 
-        const serviceCharge = 0;
+        const tax =
+            settings?.gstEnabled
+                ? (subtotal * settings.gstPercentage) / 100
+                : 0;
 
-        const deliveryCharge = 0;
+        const serviceCharge =
+            settings?.serviceChargeEnabled
+                ? (subtotal * settings.serviceChargePercentage) / 100
+                : 0;
+
+        const deliveryCharge =
+            settings?.deliveryChargeEnabled
+                ? settings.deliveryCharge
+                : 0;
 
         const total =
             subtotal +

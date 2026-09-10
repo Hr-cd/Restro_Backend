@@ -10,6 +10,8 @@ import categoryRoutes from "./routes/categoryRoutes.js";
 import adminFoodRoutes from "./routes/adminFoodRoutes.js";
 import adminTableRoutes from "./routes/adminTableRoutes.js";
 import adminSalesRoutes from "./routes/adminSalesRoutes.js";
+import adminSettingsRoutes from "./routes/adminSettingsRoutes.js";
+import settingsRoutes from "./routes/settingsRoutes.js";
 
 const app = express();
 
@@ -32,5 +34,7 @@ app.use("/api/categories", categoryRoutes);
 app.use("/api/admin/food-items", adminFoodRoutes);
 app.use("/api/admin/tables", adminTableRoutes);
 app.use("/api/admin/sales", adminSalesRoutes);
+app.use("/api/admin/settings", adminSettingsRoutes);
+app.use("/api/settings", settingsRoutes);
 
 export default app;
