@@ -254,3 +254,29 @@ export const getOrdersByTable = async (req, res) => {
         });
     }
 };
+
+export const getOrderById = async (req, res) => {
+    try {
+        const order = await Order.findById(req.params.id)
+            .populate("tableId", "tableNumber");
+
+        if (!order) {
+            return res.status(404).json({
+                success: false,
+                message: "Order not found"
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            data: order
+        });
+    } catch (error) {
+        console.error("Get order by ID error:", error);
+
+        res.status(500).json({
+            success: false,
+            message: "Failed to fetch order"
+        });
+    }
+};
