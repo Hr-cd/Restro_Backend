@@ -3,6 +3,18 @@ import Order from "../models/Order.js";
 import FoodItem from "../models/FoodItem.js";
 import Table from "../models/Table.js";
 import Setting from "../models/Setting.js";
+import rateLimit from "express-rate-limit"
+
+export const orderLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 30,
+    standardHeaders: true,
+    legacyHeaders: false,
+    message: {
+        success: false,
+        message: "Too many orders. Please try again later."
+    }
+});
 
 const generateOrderNumber = () => {
     const random = crypto.randomBytes(4).toString("hex").toUpperCase();

@@ -2,7 +2,8 @@ import express from "express";
 
 import {
     createOrder,
-    getOrderById
+    getOrderById,
+    orderLimiter
 } from "../controllers/orderController.js";
 
 const router = express.Router();
@@ -10,5 +11,7 @@ const router = express.Router();
 router.post("/", createOrder);
 
 router.get("/:id", getOrderById);
+
+router.post("/", orderLimiter, createOrder);
 
 export default router;
